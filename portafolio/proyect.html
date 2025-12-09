@@ -5,97 +5,110 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tabla de Proyecto</title>
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-image: url(../img/152668-astronauta-ambiente-el_espacio_exterior-objeto_astronomico-espacio-x750.jpg);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
+body {
+    
+    font-family: Arial, sans-serif;
+    background-image: url(../img/152668-astronauta-ambiente-el_espacio_exterior-objeto_astronomico-espacio-x750.jpg);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #fff;
+}
 
-    }
 
-    table {
-        border-collapse: collapse;
-        width: 80%;
-        max-width: 600px;
-        background: #fff;
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 20%
-    }
+table {
+    border-collapse: collapse;
+    background: rgba(31, 2, 60, 0.6);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 25px #ff00ff, 0 0 40px rgba(255, 0, 255, 0.4);
+}
 
-    caption {
-        background-color: #9b19d2;
-        color: rgb(220, 54, 154);
-        font-size: 1.3em;
-        padding: 12px;
-        font-weight: bold;
-    }
+caption {
+    background: rgba(155, 25, 210, 0.8);
+    color: #ffb3ff;
+    font-size: 1.4em;
+    padding: 12px;
+    font-weight: bold;
+    text-shadow: 0 0 10% #ff00ff;
+}
 
-    th, td{
-        text-align: left;
-        padding: 10px 15px;
-        border-bottom: 0.5px solid #ed5a5a;
-    }
-    td {
-        color: #dd1010;
-    }
+th, td {
+    text-align: left;
+    padding: 10px 15px;
+    border-bottom: 0.5px solid rgba(255, 0, 255, 0.3);
+}
 
-    td a {
-        color: #d70000;
-        text-decoration: none;
-    }
+td {
+    color: #ff66ff;
+    text-shadow: 0 0 6px #ff00ff;
+}
 
-    td a:hover {
-        text-decoration: underline;
-    }
-    th {
-        width: 60%;
-        background-color: #b6acac;
-        border-right: 1px solid #d70000 ;
-    }
 
-    tr:last-child td{
-        border-bottom: none;
-    }
+td a {
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s;
+}
 
-    .autor {
-        text-align: right;
-        margin-top: 15px;
-        font-style: italic;
-        color: #ffffff;
-    }
+td a:hover {
+    color: rgb(254, 0, 0);
+    text-shadow: 0 0 10px #ffffff;
+}
 
-    .nav {
-      display: flex;
-      gap: 30px;
-      align-items: center;
-      justify-content: center;
-      padding: 0.5% 0;
-      background-color: rgba(142, 6, 152, 0.7);
-      position: fixed;
-      top: 0;
-      width: 100%;
-      border-radius: 10%;
-    }
+th {
+    width: 60%;
+    background-color: rgba(75, 0, 100, 0.7);
+    border-right: 1px solid rgba(255, 0, 255, 0.3);
+    color: #ffb3ff;
+    text-shadow: 0 0 6px #ff00ff;
+    box-shadow: 0 0 10px #ff00ff;
+}
 
-    .nav a {
-      color: #ccc;
-      text-decoration: none;
-      transition: 0.3s;
-      position: relative;
-      font-size: 16px;
-      padding: 8px 12px;
-    }
+tr:last-child td {
+    border-bottom: none;
+}
 
-    .nav a:hover {
-      color: #9b19d2;
-      border-bottom: 2px solid #9b19d2;
-    }
-    .tableta {
-      margin-top: 5%;
-    }
+
+
+.nav {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 0.7% 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    border-radius: 0 0 20px 20px;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0 15px #ff00ff;
+    background-color: transparent;
+
+}
+
+.nav a {
+    color: #ffd6ff;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 16px;
+    padding: 8px 12px;
+    text-shadow: 0 0 8px #ffffff;
+}
+
+.nav a:hover {
+    color: white;
+    text-shadow: 0 0 12px #ff00ff;
+    border-bottom: 2px solid #ff00ff;
+}
+
+.tableta {
+    margin-top: 7%;
+}
 
 </style>
 </head>
@@ -138,7 +151,7 @@
             </tr>
                 </tr>
                 <tr>
-                <th>galxia</th>
+                <th>galaxia</th>
                 <td><a href="https://github.com/TzerK-LAST/galaxia">galaxia</a></td>
             </tr>
             
@@ -165,7 +178,6 @@
             </tr>
         </table>
 
-        <p class="autor">Hecho por: <strong>wenjin</strong></p>
     </div>
 
 </body>
