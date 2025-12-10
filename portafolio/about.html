@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../style/card.css">
+    <link rel="stylesheet" href="../style/style.css">
+</head>
+<body>
+<header class="header">
+  <!-- Logo con imagen de perfil -->
+  <div class="logo">
+    <img src="../img/yorobot.jpeg" alt="Profile" class="logo-img">
+    <span>Hi <span style="color: #00ffff;">Dev</span></span>
+  </div>
+
+  <!-- Navegación -->
+  <nav class="nav">
+    <a href="index.html">Home</a>
+    <a href="proyect.html">Projects</a>
+    <a href="#">Skills</a>
+    <!-- Imagen opcional en the nav -->
+  </nav>
+
+  <!-- Botón -->
+ <button class="btn" onclick="window.location.href='https://github.com/TzerK-LAST'">
+    Hire me
+</button>
+</header> 
+
+<main>
+    <section class="about-me">
+        <article >
+        <h3>About Me</h3>
+        <p>Soy un desarrollador front-end en formación que trabaja con HTML, CSS y JavaScript para crear interfaces rápidas, claras y funcionales. Aprendo construyendo: cada proyecto que hago se enfoca en resolver un problema real, no en repetir tutoriales.Mi prioridad es escribir código ordenado, entendible y práctico. Me interesa mejorar en JavaScript, crear experiencias intuitivas y desarrollar herramientas que realmente sean útiles para las personas. Estoy construyendo mis habilidades para crecer como programador y poder trabajar desde cualquier lugar del mundo.</p>
+        </article>  
+        <img src="../img/yomejor.png" class="img_me"  alt="">
+    </section>
+
+    <section class="contact-section">
+    <div class="contact-content">
+
+    <div class="contact-text">
+      <h2>Contacto</h2>
+      <p>
+        Si deseas colaborar, iniciar un proyecto o necesitas un desarrollador front-end para tu equipo,
+        puedes enviarme un mensaje directamente a través del formulario o mediante mis canales de contacto.
+      </p>
+
+      <div class="direct-links">
+        <a href="mailto:kevinyuluo3@gmail.com">Click para enviarme un Correo</a>
+          <div class="qr-box">
+             <h3>Instagram</h3>
+            <img src="../img/meikuto_0_qr.png" alt="QR Instagram">
+            <p>@meikuto_0</p>
+        </div>
+      </div>
+    </div>
+
+    <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="TU_ACCESS_KEY_AQUI">
+
+      <label>Nombre</label>
+      <input type="text" name="name" required>
+
+      <label>Correo</label>
+      <input type="email" name="email" required>
+
+      <label>Mensaje</label>
+      <textarea name="message" rows="5" required></textarea>
+
+      <button type="submit">Enviar</button>
+    </form>
+
+    </div>
+    </section>
+
+</main>
+
+</body>
+</html>
