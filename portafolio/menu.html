@@ -1,51 +1,420 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TzerK — Home</title>
   <link rel="stylesheet" href="../style/card.css">
-  <title>Portfolio</title>
-   <link rel="shortcut icon" href="Gemini_Generated_Image_182gld182gld182g.png"  type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* Scanline overlay */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 9998; pointer-events: none;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 3px,
+        rgba(0,0,0,0.025) 3px, rgba(0,0,0,0.025) 4px
+      );
+    }
+
+    /* Canvas */
+    #hero-canvas {
+      position: absolute; inset: 0; z-index: 0;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; position: relative; overflow: hidden;
+      padding: 0 1.5rem;
+    }
+    .hero-content { position: relative; z-index: 10; max-width: 860px; }
+
+    /* Greeting */
+    .hero-greeting {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem; color: var(--cyan);
+      letter-spacing: 0.2em; margin-bottom: 1.5rem;
+      opacity: 0; animation: fade-up 0.6s ease 0.3s forwards;
+      min-height: 1.4em;
+    }
+    .caret {
+      display: inline-block; width: 9px; height: 15px;
+      background: var(--cyan); margin-left: 2px;
+      animation: blink 1s step-end infinite; vertical-align: middle;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* Glitch name */
+    .hero-name {
+      font-family: 'Orbitron', sans-serif; font-weight: 900;
+      font-size: clamp(4rem, 14vw, 9rem); line-height: 1;
+      margin-bottom: 0.5rem;
+      opacity: 0; animation: fade-up 0.7s ease 0.5s forwards;
+    }
+    .glitch {
+      background: linear-gradient(135deg, #fff 0%, var(--purple) 40%, var(--cyan) 75%, var(--gold) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      position: relative; display: inline-block;
+    }
+    .glitch::before, .glitch::after {
+      content: attr(data-text);
+      position: absolute; top: 0; left: 0;
+      background: inherit; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .glitch::before {
+      clip-path: polygon(0 18%, 100% 18%, 100% 38%, 0 38%);
+      transform: translate(-3px);
+      animation: glitch-a 5s infinite;
+    }
+    .glitch::after {
+      clip-path: polygon(0 62%, 100% 62%, 100% 82%, 0 82%);
+      transform: translate(3px);
+      animation: glitch-b 5s infinite;
+    }
+    @keyframes glitch-a {
+      0%,88%,100%{transform:translate(0);opacity:0}
+      89%{transform:translate(-5px,2px);opacity:1;filter:hue-rotate(90deg)}
+      91%{transform:translate(4px,-1px);opacity:0.8}
+      93%{transform:translate(-2px,1px);opacity:0;filter:none}
+    }
+    @keyframes glitch-b {
+      0%,90%,100%{transform:translate(0);opacity:0}
+      92%{transform:translate(5px,-2px);opacity:1;filter:hue-rotate(-90deg)}
+      94%{transform:translate(-4px,1px);opacity:0.8}
+      96%{transform:translate(2px,-1px);opacity:0;filter:none}
+    }
+
+    /* Typewriter role */
+    .hero-role {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(0.8rem, 1.8vw, 1rem);
+      color: var(--muted); margin-bottom: 1.8rem;
+      min-height: 1.6em;
+      opacity: 0; animation: fade-up 0.6s ease 0.65s forwards;
+    }
+    .role-prefix { color: var(--purple); }
+    .role-val { color: var(--cyan); }
+    .caret-purple { display:inline-block;width:8px;height:14px;background:var(--purple);margin-left:1px;animation:blink 1s step-end infinite;vertical-align:middle; }
+
+    .hero-cta {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;
+      margin-bottom: 2.5rem;
+      opacity: 0; animation: fade-up 0.6s ease 0.85s forwards;
+    }
+    .hero-tags {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem;
+      opacity: 0; animation: fade-up 0.6s ease 1.05s forwards;
+    }
+    .hero-tag {
+      padding: 0.3rem 0.9rem;
+      background: var(--glass); border: 1px solid var(--border);
+      border-radius: 99px; font-size: 0.72rem;
+      font-family: 'JetBrains Mono', monospace; color: var(--muted);
+      backdrop-filter: blur(6px); transition: 0.25s; cursor: default;
+    }
+    .hero-tag:hover { color: var(--cyan); border-color: rgba(0,255,255,0.3); background: rgba(0,255,255,0.04); }
+
+    /* Scroll hint */
+    .scroll-hint {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      opacity: 0.35; animation: bob 2.5s ease-in-out infinite;
+      z-index: 10;
+    }
+    .scroll-hint span { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; color: var(--muted); letter-spacing: 0.25em; }
+    .scroll-mouse { width: 20px; height: 32px; border: 1.5px solid var(--muted); border-radius: 12px; position: relative; }
+    .scroll-mouse::after { content:'';position:absolute;width:3px;height:5px;background:var(--cyan);border-radius:99px;left:50%;top:5px;transform:translateX(-50%);animation:scroll-w 2s ease-in-out infinite; }
+    @keyframes scroll-w { 0%,100%{top:5px;opacity:1} 50%{top:15px;opacity:0} }
+    @keyframes bob { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+
+    /* ── Stats bar ── */
+    .stats-section {
+      padding: 3.5rem 1.5rem;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(168,85,247,0.02) 0%, transparent 100%);
+    }
+    .stats-inner {
+      max-width: 800px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5rem;
+      text-align: center;
+    }
+    .s-stat { position: relative; }
+    .s-stat + .s-stat::before {
+      content:''; position:absolute; left:0; top:15%; height:70%;
+      width:1px; background:var(--border);
+    }
+    .s-stat-n {
+      font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 2.6rem;
+      background: linear-gradient(135deg, var(--purple), var(--cyan));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      line-height: 1;
+    }
+    .s-stat-l { font-family:'JetBrains Mono',monospace; font-size:0.58rem; color:var(--muted); letter-spacing:0.15em; margin-top:0.5rem; }
+
+    /* ── Quick cards ── */
+    .quick-section { padding: 5.5rem 1.5rem 7rem; position: relative; overflow: hidden; }
+    .quick-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1.5rem; max-width: 1050px; margin: 0 auto;
+    }
+    .quick-card {
+      border-radius: var(--radius); padding: 2.2rem;
+      text-decoration: none; color: var(--text);
+      display: flex; flex-direction: column; gap: 0.9rem;
+      transition: box-shadow 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .quick-card::before {
+      content:''; position:absolute; top:0; left:0; right:0;
+      height:3px; opacity:0; transition:opacity 0.3s;
+    }
+    .quick-card::after {
+      content:''; position:absolute; inset:0;
+      opacity:0; transition:opacity 0.4s; border-radius:var(--radius); pointer-events:none;
+    }
+    .qc-purple::before { background:linear-gradient(90deg,var(--purple),var(--cyan)); }
+    .qc-cyan::before   { background:linear-gradient(90deg,var(--cyan),var(--gold)); }
+    .qc-gold::before   { background:linear-gradient(90deg,var(--gold),var(--purple)); }
+    .qc-purple::after  { background:radial-gradient(circle at 50% 0%,rgba(168,85,247,0.1),transparent 65%); }
+    .qc-cyan::after    { background:radial-gradient(circle at 50% 0%,rgba(0,255,255,0.07),transparent 65%); }
+    .qc-gold::after    { background:radial-gradient(circle at 50% 0%,rgba(255,215,0,0.07),transparent 65%); }
+    .quick-card:hover { box-shadow: 0 24px 64px rgba(0,0,0,0.6); }
+    .quick-card:hover::before { opacity:1; }
+    .quick-card:hover::after  { opacity:1; }
+    .quick-icon { font-size:2.5rem; filter:drop-shadow(0 0 10px rgba(168,85,247,0.4)); }
+    .quick-title { font-family:'Orbitron',sans-serif; font-weight:700; font-size:1.15rem; }
+    .qc-purple .quick-title { background:linear-gradient(135deg,var(--purple),var(--cyan)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .qc-cyan   .quick-title { background:linear-gradient(135deg,var(--cyan),var(--gold)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .qc-gold   .quick-title { background:linear-gradient(135deg,var(--gold),var(--purple)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .quick-desc { color:var(--muted); font-size:0.85rem; line-height:1.75; flex:1; }
+    .quick-arrow {
+      font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:var(--muted);
+      display:flex; align-items:center; gap:0.4rem; transition:gap 0.2s, color 0.2s;
+    }
+    .quick-card:hover .quick-arrow { gap:0.8rem; color:var(--cyan); }
+
+    @keyframes fade-up { from{opacity:0;transform:translateY(26px)} to{opacity:1;transform:none} }
+    @media (max-width:700px) { .quick-grid{grid-template-columns:1fr} .stats-inner{grid-template-columns:repeat(2,1fr)} .s-stat+.s-stat::before{display:none} }
+  </style>
 </head>
 <body>
 
-<header class="header">
-  <!-- Logo con imagen de perfil -->
-  <div class="logo">
-    <img src="../img/yorobot.jpeg" alt="Profile" class="logo-img">
-    <span>Hi <span style="color: #00ffff;">Dev</span></span>
-  </div>
-
-  <!-- Navegación -->
-  <nav class="nav">
-    <a href="about.html">About me</a>
-    <a href="proyect.html">Projects</a>
-    <a href="#">Skills</a>
-    <!-- Imagen opcional en the nav -->
+  <nav class="s-nav">
+    <div class="s-nav-inner">
+      <a href="menu.html" class="s-logo">TzerK<span style="color:var(--cyan)">.</span></a>
+      <ul class="s-links">
+        <li><a href="menu.html" class="active">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="proyect.html">Projects</a></li>
+      </ul>
+      <div style="display:flex;align-items:center;gap:0.75rem">
+        <a href="/" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.5rem 0.9rem;background:rgba(0,255,255,0.06);border:1px solid rgba(0,255,255,0.2);border-radius:0.5rem;color:var(--cyan);text-decoration:none;font-size:0.75rem;font-family:'JetBrains Mono',monospace;transition:0.25s" onmouseover="this.style.background='rgba(0,255,255,0.12)'" onmouseout="this.style.background='rgba(0,255,255,0.06)'">
+          <i class="fas fa-arrow-left" style="font-size:0.6rem"></i> V2
+        </a>
+        <a href="https://github.com/TzerK-LAST" target="_blank" class="btn-p">
+          <i class="fab fa-github" style="margin-right:0.5rem"></i>GitHub
+        </a>
+      </div>
+    </div>
   </nav>
 
-  <!-- Botón -->
- <button class="btn" onclick="window.location.href='https://github.com/TzerK-LAST'">
-    Hire me
-</button>
+  <!-- HERO -->
+  <section class="hero">
+    <canvas id="hero-canvas"></canvas>
 
-</header>
+    <div class="hero-content">
+      <p class="hero-greeting"><span id="greet-el">&gt; _</span><span class="caret"></span></p>
 
-<!-- Contenido de ejemplo -->
- <main>
-<section class="content">
-  <h1>this is my pages</h1>
-  <p>website</p>
-</section>
+      <h1 class="hero-name">
+        <span class="glitch" data-text="TzerK">TzerK</span>
+      </h1>
 
-    <div class="hero-text">
-        <h2>this is </h2>
-        <h1>my<br><span>web</span></h1>
-        <p>I build things for web</p>
+      <div class="hero-role">
+        <span class="role-prefix">const dev = "</span><span class="role-val" id="role-el"></span><span class="caret-purple"></span><span class="role-prefix">";</span>
+      </div>
+
+      <div class="hero-cta">
+        <a href="proyect.html" class="btn-p">
+          <i class="fas fa-rocket" style="margin-right:0.5rem"></i>View Projects
+        </a>
+        <a href="about.html" class="btn-o">
+          <i class="fas fa-user" style="margin-right:0.5rem"></i>About Me
+        </a>
+        <a href="https://github.com/TzerK-LAST" target="_blank" style="display:inline-flex;align-items:center;padding:0.65rem 1.5rem;background:var(--glass);border:1px solid var(--border);border-radius:0.5rem;color:var(--muted);text-decoration:none;font-size:0.875rem;transition:0.3s;backdrop-filter:blur(6px)" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,255,255,0.2)'" onmouseout="this.style.color='';this.style.borderColor=''">
+          <i class="fab fa-github" style="margin-right:0.5rem"></i>GitHub
+        </a>
+      </div>
+
+      <div class="hero-tags">
+        <span class="hero-tag">HTML / CSS</span>
+        <span class="hero-tag">JavaScript</span>
+        <span class="hero-tag">Python</span>
+        <span class="hero-tag">Node.js</span>
+        <span class="hero-tag">C# / .NET</span>
+        <span class="hero-tag">Git</span>
+      </div>
     </div>
 
+    <div class="scroll-hint">
+      <div class="scroll-mouse"></div>
+      <span>SCROLL</span>
+    </div>
+  </section>
 
+  <!-- STATS -->
+  <div class="stats-section">
+    <div class="stats-inner">
+      <div class="s-stat"><div class="s-stat-n" data-target="2" data-suf="+">0</div><div class="s-stat-l">YEARS CODING</div></div>
+      <div class="s-stat"><div class="s-stat-n" data-target="20" data-suf="+">0</div><div class="s-stat-l">PROJECTS BUILT</div></div>
+      <div class="s-stat"><div class="s-stat-n" data-target="7" data-suf="+">0</div><div class="s-stat-l">TECHNOLOGIES</div></div>
+      <div class="s-stat"><div class="s-stat-n" data-target="100" data-suf="%">0</div><div class="s-stat-l">DEDICATION</div></div>
+    </div>
+  </div>
 
- </main>
+  <!-- QUICK LINKS -->
+  <section class="quick-section">
+    <div class="bg-glow bg-glow-p"></div>
+    <div class="bg-glow bg-glow-c"></div>
+
+    <div class="s-head" style="max-width:1050px;margin:0 auto 3rem">
+      <p class="s-eyebrow">// EXPLORE</p>
+      <h2 class="s-title">What's <span class="gradient-text">Here</span></h2>
+      <div class="s-line"></div>
+    </div>
+
+    <div class="quick-grid">
+      <a href="about.html" class="quick-card glass qc-purple">
+        <div class="quick-icon">👤</div>
+        <div class="quick-title">About Me</div>
+        <p class="quick-desc">Who I am, what drives me, my stack, and how to reach me. Skills, timeline &amp; contact form included.</p>
+        <span class="quick-arrow"><i class="fas fa-arrow-right" style="font-size:0.6rem"></i> about.html</span>
+      </a>
+      <a href="proyect.html" class="quick-card glass qc-cyan">
+        <div class="quick-icon">🗂️</div>
+        <div class="quick-title">Projects</div>
+        <p class="quick-desc">All my projects — Python tools, web apps, team collabs, and more. Filterable by tech &amp; type.</p>
+        <span class="quick-arrow"><i class="fas fa-arrow-right" style="font-size:0.6rem"></i> proyect.html</span>
+      </a>
+      <a href="https://github.com/TzerK-LAST" target="_blank" class="quick-card glass qc-gold">
+        <div class="quick-icon">⭐</div>
+        <div class="quick-title">GitHub</div>
+        <p class="quick-desc">Full source code for every project. Repos, contributions, and all activity — fully open source.</p>
+        <span class="quick-arrow"><i class="fas fa-arrow-right" style="font-size:0.6rem"></i> github.com/TzerK-LAST</span>
+      </a>
+    </div>
+  </section>
+
+  <footer class="s-footer">
+    <p>Crafted with <span style="color:var(--purple)">♥</span> by TzerK &middot; 2025</p>
+  </footer>
+
+<script>
+// ── CANVAS STARFIELD ──
+const cvs = document.getElementById('hero-canvas');
+const ctx = cvs.getContext('2d');
+let W, H, stars = [];
+const mouse = { x: -999, y: -999 };
+
+function resize() {
+  const hero = cvs.parentElement;
+  W = cvs.width  = hero.offsetWidth;
+  H = cvs.height = hero.offsetHeight;
+}
+
+function initStars() {
+  stars = [];
+  for (let i = 0; i < 180; i++) {
+    stars.push({
+      x: Math.random() * W, y: Math.random() * H,
+      r: Math.random() * 1.6 + 0.3,
+      vx: (Math.random() - 0.5) * 0.25, vy: (Math.random() - 0.5) * 0.25,
+      c: ['#a855f7','#00ffff','#ffffff','#ffd700'][Math.floor(Math.random()*4)],
+      a: Math.random() * 0.5 + 0.15
+    });
+  }
+}
+
+window.addEventListener('load', () => { resize(); initStars(); });
+window.addEventListener('resize', () => { resize(); initStars(); });
+
+cvs.parentElement.addEventListener('mousemove', e => {
+  const r = cvs.getBoundingClientRect();
+  mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
+});
+cvs.parentElement.addEventListener('mouseleave', () => { mouse.x = -999; mouse.y = -999; });
+
+(function tick() {
+  ctx.clearRect(0, 0, W, H);
+  stars.forEach(s => {
+    s.x += s.vx; s.y += s.vy;
+    if (s.x < 0) s.x = W; if (s.x > W) s.x = 0;
+    if (s.y < 0) s.y = H; if (s.y > H) s.y = 0;
+    const dx = s.x - mouse.x, dy = s.y - mouse.y, d = Math.sqrt(dx*dx+dy*dy);
+    if (d < 130) { const f = (130-d)/130 * 2; s.x += dx/d*f; s.y += dy/d*f; }
+    ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+    ctx.fillStyle = s.c; ctx.globalAlpha = s.a; ctx.fill(); ctx.globalAlpha = 1;
+  });
+  for (let i = 0; i < stars.length; i++) {
+    for (let j = i+1; j < stars.length; j++) {
+      const dx = stars[i].x-stars[j].x, dy = stars[i].y-stars[j].y, d = Math.sqrt(dx*dx+dy*dy);
+      if (d < 95) {
+        ctx.beginPath(); ctx.moveTo(stars[i].x, stars[i].y); ctx.lineTo(stars[j].x, stars[j].y);
+        ctx.strokeStyle = `rgba(168,85,247,${0.1*(1-d/95)})`; ctx.lineWidth = 0.5; ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(tick);
+})();
+
+// ── TYPEWRITERS ──
+function typewriter(el, texts, typespeed, erasespeed, pause) {
+  let ti = 0;
+  function type(txt, i) {
+    if (i <= txt.length) { el.textContent = txt.slice(0,i); setTimeout(() => type(txt, i+1), typespeed); }
+    else setTimeout(() => erase(txt), pause);
+  }
+  function erase(txt) {
+    if (txt.length > 0) { el.textContent = txt.slice(0,-1); setTimeout(() => erase(txt.slice(0,-1)), erasespeed); }
+    else { ti = (ti+1) % texts.length; setTimeout(() => type(texts[ti], 0), 300); }
+  }
+  setTimeout(() => type(texts[0], 0), 800);
+}
+
+typewriter(document.getElementById('greet-el'),
+  ['> Hello, World!', '> Hola, Mundo!', '> Welcome to my Portfolio', '> Initializing TzerK...'],
+  55, 30, 3200);
+
+typewriter(document.getElementById('role-el'),
+  ['Frontend Developer', 'Python Enthusiast', 'Builder', 'Open Source Lover'],
+  65, 38, 2600);
+
+// ── COUNT-UP STATS ──
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    const target = parseInt(el.dataset.target);
+    const suf = el.dataset.suf || '';
+    let n = 0; const step = Math.max(1, Math.ceil(target / 45));
+    const t = setInterval(() => { n = Math.min(n+step, target); el.textContent = n+suf; if(n>=target) clearInterval(t); }, 35);
+    obs.unobserve(el);
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.s-stat-n[data-target]').forEach(el => obs.observe(el));
+
+// ── 3D TILT ON CARDS ──
+document.querySelectorAll('.quick-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top)  / r.height - 0.5;
+    card.style.transform = `perspective(700px) rotateY(${x*15}deg) rotateX(${-y*10}deg) translateY(-8px)`;
+  });
+  card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+});
+</script>
 </body>
 </html>

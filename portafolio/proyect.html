@@ -1,144 +1,526 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tabla de Proyecto</title>
-<link rel="stylesheet" href="../style/proyect.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TzerK — Projects</title>
+  <link rel="stylesheet" href="../style/card.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .projects-page {
+      max-width: 1280px; margin: 0 auto;
+      padding: 7rem 1.5rem 5rem; position: relative; overflow: hidden;
+    }
+
+    /* ── Spotlight / Featured ── */
+    .spotlight {
+      margin-bottom: 4rem; position: relative;
+    }
+    .spotlight-inner {
+      border-radius: 1.25rem; overflow: hidden;
+      display: grid; grid-template-columns: 1fr 1.1fr; min-height: 280px;
+      position: relative; transition: box-shadow 0.4s;
+      border: 1px solid rgba(168,85,247,0.25);
+    }
+    .spotlight-inner:hover { box-shadow: 0 0 80px rgba(168,85,247,0.2), 0 24px 60px rgba(0,0,0,0.5); }
+    .spotlight-visual {
+      background: linear-gradient(135deg, rgba(168,85,247,0.18) 0%, rgba(0,255,255,0.08) 50%, rgba(255,215,0,0.05) 100%);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .spotlight-visual::before {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        45deg, transparent, transparent 10px,
+        rgba(168,85,247,0.04) 10px, rgba(168,85,247,0.04) 11px
+      );
+    }
+    .spotlight-emoji-wrap {
+      font-size: 5rem; position: relative; z-index: 1;
+      filter: drop-shadow(0 0 30px rgba(168,85,247,0.5));
+      animation: float-emoji 4s ease-in-out infinite;
+    }
+    @keyframes float-emoji { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+    .spotlight-badge {
+      position: absolute; top: 1rem; left: 1rem;
+      background: linear-gradient(135deg, var(--purple), #6d28d9);
+      color: #fff; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
+      padding: 0.3rem 0.8rem; border-radius: 99px;
+      letter-spacing: 0.1em; box-shadow: 0 0 20px rgba(168,85,247,0.4);
+    }
+    .spotlight-body {
+      padding: 2.5rem 2.5rem; display: flex; flex-direction: column;
+      justify-content: center; gap: 1rem;
+      background: rgba(255,255,255,0.02);
+    }
+    .spotlight-eyebrow { font-family:'JetBrains Mono',monospace; font-size:0.62rem; color:var(--cyan); letter-spacing:0.15em; }
+    .spotlight-title {
+      font-family: 'Orbitron', sans-serif; font-weight: 900;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      background: linear-gradient(135deg, #fff 0%, var(--purple) 50%, var(--cyan) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .spotlight-desc { color: var(--muted); font-size: 0.875rem; line-height: 1.8; }
+    .spotlight-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .spotlight-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+    /* ── Stats bar ── */
+    .stats-bar {
+      display: flex; flex-wrap: wrap; gap: 0; justify-content: center;
+      margin-bottom: 3rem; border: 1px solid var(--border); border-radius: 1rem;
+      overflow: hidden; background: rgba(255,255,255,0.02);
+    }
+    .stats-item {
+      flex: 1; min-width: 120px; text-align: center;
+      padding: 1.25rem 1rem; position: relative;
+    }
+    .stats-item + .stats-item::before {
+      content: ''; position: absolute; left: 0; top: 20%; height: 60%;
+      width: 1px; background: var(--border);
+    }
+    .stats-n {
+      font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 2rem;
+      background: linear-gradient(135deg, var(--purple), var(--cyan));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .stats-l { font-family:'JetBrains Mono',monospace; font-size:0.6rem; color:var(--muted); letter-spacing:0.1em; margin-top:0.3rem; }
+
+    /* ── Filters ── */
+    .filter-bar {
+      display: flex; align-items: center; gap: 1rem; margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .filter-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; flex: 1; }
+    .filter-btn {
+      padding: 0.42rem 1.1rem;
+      background: var(--glass); border: 1px solid var(--border);
+      border-radius: 99px; font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; color: var(--muted);
+      cursor: pointer; transition: 0.25s; backdrop-filter: blur(6px);
+    }
+    .filter-btn:hover, .filter-btn.active {
+      color: var(--cyan); border-color: rgba(0,255,255,0.4);
+      background: rgba(0,255,255,0.06);
+    }
+    .search-wrap { position: relative; }
+    .search-input {
+      background: var(--glass); border: 1px solid var(--border);
+      border-radius: 0.5rem; padding: 0.42rem 1rem 0.42rem 2.2rem;
+      color: var(--text); font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem; outline: none; transition: border-color 0.2s;
+      min-width: 180px;
+    }
+    .search-input::placeholder { color: var(--muted); }
+    .search-input:focus { border-color: rgba(168,85,247,0.4); }
+    .search-icon { position: absolute; left: 0.7rem; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 0.7rem; }
+    .results-count { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--muted); }
+
+    /* ── Cards ── */
+    .proj-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    }
+    .proj-card {
+      border-radius: var(--radius); display: flex; flex-direction: column;
+      position: relative; overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+      opacity: 0; transform: translateY(32px);
+    }
+    .proj-card.visible { opacity: 1; transform: none; transition: opacity 0.55s ease, transform 0.55s ease, border-color 0.3s, box-shadow 0.3s; }
+    .proj-card.hidden { display: none; }
+    .proj-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; opacity: 0; transition: opacity 0.3s;
+      background: linear-gradient(90deg, var(--purple), var(--cyan));
+    }
+    .proj-card:hover { transform: translateY(-8px); box-shadow: 0 20px 54px rgba(0,0,0,0.45); }
+    .proj-card:hover::before { opacity: 1; }
+
+    /* Card cover */
+    .proj-cover {
+      height: 120px; display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .proj-cover::before { content: ''; position: absolute; inset: 0; background: inherit; }
+    .proj-cover-emoji {
+      font-size: 2.8rem; position: relative; z-index: 1;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
+    }
+    .cover-web    { background: linear-gradient(135deg, rgba(168,85,247,0.15), rgba(0,255,255,0.08)); }
+    .cover-python { background: linear-gradient(135deg, rgba(255,215,0,0.12), rgba(168,85,247,0.08)); }
+    .cover-team   { background: linear-gradient(135deg, rgba(0,255,255,0.12), rgba(255,215,0,0.06)); }
+
+    .proj-body { padding: 1.4rem; display: flex; flex-direction: column; flex: 1; }
+    .proj-name {
+      font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 0.95rem;
+      background: linear-gradient(135deg, var(--purple), var(--cyan));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 0.45rem;
+    }
+    .proj-desc { color: var(--muted); font-size: 0.8rem; line-height: 1.75; flex: 1; margin-bottom: 0.9rem; }
+    .proj-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 1rem; }
+    .proj-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 0.75rem; border-top: 1px solid var(--border);
+    }
+    .proj-type { font-family:'JetBrains Mono',monospace; font-size:0.6rem; color:var(--muted); letter-spacing:0.08em; }
+    .proj-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+      color: var(--cyan); text-decoration: none; transition: gap 0.2s;
+    }
+    .proj-link:hover { gap: 0.7rem; }
+
+    /* No results */
+    .no-results {
+      display: none; text-align: center; padding: 4rem 2rem;
+      font-family: 'JetBrains Mono', monospace; color: var(--muted); font-size: 0.85rem;
+      grid-column: 1/-1;
+    }
+    .no-results i { font-size: 2rem; margin-bottom: 0.75rem; display: block; opacity: 0.4; }
+
+    @media (max-width: 900px)  { .proj-grid { grid-template-columns: 1fr 1fr; } .spotlight-inner { grid-template-columns: 1fr; } .spotlight-visual { min-height: 160px; } }
+    @media (max-width: 600px)  { .proj-grid { grid-template-columns: 1fr; } .stats-bar { flex-direction: column; } .stats-item+.stats-item::before { display:none; } .stats-item+.stats-item { border-top: 1px solid var(--border); } }
+  </style>
 </head>
 <body>
 
-    <nav class="nav">
-      <a href="../portafolio/menu.html">Home</a>
-      <a href="">Skills</a>
-      <a href="about.html">about</a>
-    </nav>
+  <!-- Nav -->
+  <nav class="s-nav">
+    <div class="s-nav-inner">
+      <a href="menu.html" class="s-logo">TzerK<span style="color:var(--cyan)">.</span></a>
+      <ul class="s-links">
+        <li><a href="menu.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="proyect.html" class="active">Projects</a></li>
+      </ul>
+      <div style="display:flex;align-items:center;gap:0.75rem">
+        <a href="/" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.5rem 0.9rem;background:rgba(0,255,255,0.06);border:1px solid rgba(0,255,255,0.2);border-radius:0.5rem;color:var(--cyan);text-decoration:none;font-size:0.75rem;font-family:'JetBrains Mono',monospace;transition:0.25s" onmouseover="this.style.background='rgba(0,255,255,0.12)'" onmouseout="this.style.background='rgba(0,255,255,0.06)'">
+          <i class="fas fa-arrow-left" style="font-size:0.6rem"></i> V2
+        </a>
+        <a href="https://github.com/TzerK-LAST" target="_blank" class="btn-p">
+          <i class="fab fa-github" style="margin-right:0.5rem"></i>GitHub
+        </a>
+      </div>
+    </div>
+  </nav>
 
+  <div class="projects-page">
+    <div class="bg-glow bg-glow-p"></div>
+    <div class="bg-glow bg-glow-c"></div>
 
-    <div class="tableta">
-        <table>
-            <caption>mi proyecto personal</caption>
-            <tr>
-                <th>EcodeRide</th>
-                <td><a href="https://github.com/TzerK-LAST/EcoRide-simulador-de-alquiler/blob/main/EcoRide.py">Mi Proyecto</a></td>
-            </tr>
-            <tr>
-                <th>Ejercicios de Control de Flujo en Python</th>
-                <td><a href="https://github.com/TzerK-LAST/10-EJERCICIOS-.git">los 10 proyecto</a></td>
-            </tr>
-            <tr>
-                <th>Actividad: Decisiones y Ciclos en Python</th>
-                <td><a href="https://github.com/TzerK-LAST/Actividad-Decisiones-y-Ciclos-en-Python">los 10 proyectos</a></td>
-            </tr>
-             <tr>
-                <th>CrudActivity - CrudData — Estructuras de Datos en Python</th>
-                <td><a href="https://github.com/TzerK-LAST/-Estructuras-de-Datos-en-Python">los 3 ejercicios</a></td>
-            </tr>
-                <tr>
-                <th>CrudActivity — Crudzaso Games</th>
-                <td><a href="https://github.com/TzerK-LAST/ExcelRaincher">ExcelRaincher</a></td>
-            </tr>
-                <tr>
-                <th>historial de usuario(inventarios)</th>
-                <td><a href="https://github.com/TzerK-LAST/historial-de-usuario-inventario-">inventarios</a></td>
-                        
-            </tr>
-                </tr>
-                <tr>
-                <th>galaxia</th>
-                <td><a href="https://github.com/TzerK-LAST/galaxia">galaxia</a></td>
-            </tr>
-            
-            </tr>
-                </tr>
-                <tr>
-                <th>WorldHub — Crisis en el Atlas de Crudzaso</th>
-                <td><a href="https://github.com/HellboysRIWI/planeta_infierno">IGNIS INANIS</a></td>
-            </tr>
-                </tr>
-                </tr>
-                <tr>
-                <th>CRUDScope HTML MediaPanel</th>
-                <td><a href="https://github.com/TzerK-LAST/CRUDScope-HTML-MediaPanel/blob/main/readme.md">html</a></td>
-            </tr>
-             </tr>
-                <tr>
-                <th>CrudActivity - Mini OS: Tu escritorio en una sola página Contexto de la actividad</th>
-                <td><a href="https://github.com/FaiberCamachoDev/Mini-OS-Ubuntu">ubuntu</a></td>
-            </tr>
-            </tr>
-                <tr>
-                <th>Historia de usuario M2</th>
-                <td><a href=" https://github.com/TzerK-LAST/modulo-2-semana-3">model</a></td>
-            </tr>
-              </tr>
-                <tr>
-                <th>STORECRUD</th>
-                <td><a href=" https://github.com/TzerK-LAST/CRUDactivity---StoreCrud">model</a></td>
-            </tr>
-            <tr>
-                <th>windowVista__en_equipo</th>
-                <td><a href=" https://github.com/ArchilaG/mini-os">model</a></td>
-            </tr>
-                <tr>
-                <th>prueba de desempeño</th>
-                <td><a href=" https://github.com/TzerK-LAST/prueba">model</a></td>
-            </tr>
-            </tr>
-                <tr>
-                <th>Simulador-interactivo-en-JavaScript</th>
-                <td><a href="https://github.com/TzerK-LAST/CRUDLab-Simulador-interactivo-en-JavaScript.git">simulador</a></td>
-            </tr>
-              </tr>
-                <tr>
-                <th>TaskFlow – Gestor de tareas colaborativo</th>
-                <td><a href=" https://github.com/Choklitos21/TaskFlow-RIWI">taskflow</a></td>
-            </tr>
-         </tr>
-                <tr>
-                <th>Netflix Replica — Landing, Auth, Profiles and Home</th>
-                <td><a href="https://github.com/TzerK-LAST/neflix-replicated">replicate neflix</a></td>
-            </tr>
-
-            </tr>
-                <tr>
-                <th>Individual Activity — CRUDZASO</th>
-                <td><a href=" https://github.com/TzerK-LAST/individual-Activity-CRUDZASO-HabitFlow.git">HabitFlow</a></td>
-            </tr>
-            <tr>
-            </tr>
-                <tr>
-                <th>Group Activity — CRUDZASO · IdeaHub</th>
-                <td><a href="https://github.com/Mk1-mid/CRUDZASO-IdeaHub.git">crudzaso</a></td>
-            </tr>
-            <tr>
-            </tr>
-                <tr>
-                <th>historia de usuario javascript</th>
-                <td><a href="https://github.com/TzerK-LAST/historia-de-usuario-de-javascript.git">crudzaso</a></td>
-            </tr>
-            <tr>
-
-                
-                <th>Estado</th>
-                <td>En desarrollo</td>
-            </tr>
-        </table>
-
+    <div class="s-head">
+      <p class="s-eyebrow">// WHAT I'VE BUILT</p>
+      <h2 class="s-title">All <span class="gradient-text">Projects</span></h2>
+      <div class="s-line"></div>
     </div>
 
+    <!-- SPOTLIGHT -->
+    <div class="spotlight">
+      <div class="spotlight-inner">
+        <div class="spotlight-visual">
+          <span class="spotlight-badge">★ FEATURED PROJECT</span>
+          <div class="spotlight-emoji-wrap">🖥️</div>
+        </div>
+        <div class="spotlight-body">
+          <p class="spotlight-eyebrow">// TEAM · WEB · BEST BUILD</p>
+          <h2 class="spotlight-title">Mini OS Ubuntu</h2>
+          <p class="spotlight-desc">A full browser-based desktop OS simulation. Drag &amp; drop windows, taskbar, interactive terminal, file manager and working apps — all built in vanilla HTML/CSS/JS as a team project.</p>
+          <div class="spotlight-tags">
+            <span class="t-tag">HTML</span><span class="t-tag">CSS</span><span class="t-tag">JavaScript</span><span class="t-tag">Team</span>
+          </div>
+          <div class="spotlight-actions">
+            <a href="https://github.com/FaiberCamachoDev/Mini-OS-Ubuntu" target="_blank" class="btn-p" style="font-size:0.8rem;padding:0.55rem 1.2rem">
+              <i class="fab fa-github" style="margin-right:0.4rem"></i>View Code
+            </a>
+            <a href="https://github.com/FaiberCamachoDev/Mini-OS-Ubuntu" target="_blank" class="btn-o" style="font-size:0.8rem;padding:0.55rem 1.2rem">
+              <i class="fas fa-arrow-up-right-from-square" style="margin-right:0.4rem"></i>Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-bar">
+      <div class="stats-item">
+        <div class="stats-n" data-target="20" data-suf="+">0</div>
+        <div class="stats-l">TOTAL PROJECTS</div>
+      </div>
+      <div class="stats-item">
+        <div class="stats-n" data-target="6" data-suf="+">0</div>
+        <div class="stats-l">TEAM PROJECTS</div>
+      </div>
+      <div class="stats-item">
+        <div class="stats-n" data-target="5" data-suf="+">0</div>
+        <div class="stats-l">TECHNOLOGIES</div>
+      </div>
+      <div class="stats-item">
+        <div class="stats-n" data-target="2" data-suf="+">0</div>
+        <div class="stats-l">YEARS CODING</div>
+      </div>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="filter-bar">
+      <div class="filter-tabs">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="web">Web</button>
+        <button class="filter-btn" data-filter="python">Python</button>
+        <button class="filter-btn" data-filter="team">Team</button>
+      </div>
+      <div class="search-wrap">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" id="search-input" class="search-input" placeholder="Search projects...">
+      </div>
+      <span class="results-count" id="results-count"></span>
+    </div>
+
+    <!-- GRID -->
+    <div class="proj-grid" id="proj-grid">
+
+      <div class="proj-card glass" data-tags="web team" data-name="netflix replica">
+        <div class="proj-cover cover-web"><div class="proj-cover-emoji">🎬</div></div>
+        <div class="proj-body">
+          <h3 class="proj-name">Netflix Replica</h3>
+          <p class="proj-desc">Full Netflix UI clone with Landing page, Auth system, Profile selection, and Home screen with categorized content rows.</p>
+          <div class="proj-tags">
+            <span class="t-tag">HTML</span><span class="t-tag">CSS</span><span class="t-tag">JavaScript</span>
+          </div>
+          <div class="proj-footer">
+            <span class="proj-type">WEB · SOLO</span>
+            <a href="https://github.com/TzerK-LAST/neflix-replicated" target="_blank" class="proj-link">
+              <i class="fab fa-github"></i> View Code →
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card glass" data-tags="python" data-name="ecoride">
+        <div class="proj-cover cover-python"><div class="proj-cover-emoji">🚴</div></div>
+        <div class="proj-body">
+          <h3 class="proj-name">EcoRide</h3>
+          <p class="proj-desc">Interactive bike rental simulator in Python. Manage fleet, calculate pricing, track rides with a full CRUD system.</p>
+          <div class="proj-tags">
+            <span class="t-tag">Python</span><span class="t-tag">OOP</span><span class="t-tag">CLI</span>
+          </div>
+          <div class="proj-footer">
+            <span class="proj-type">PYTHON · SOLO</span>
+            <a href="https://github.com/TzerK-LAST/EcoRide-simulador-de-alquiler" target="_blank" class="proj-link">
+              <i class="fab fa-github"></i> View Code →
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card glass" data-tags="web team" data-name="taskflow">
+        <div class="proj-cover cover-team"><div class="proj-cover-emoji">📋</div></div>
+        <div class="proj-body">
+          <h3 class="proj-name">TaskFlow</h3>
+          <p class="proj-desc">Collaborative task manager with real-time updates, team management, and progress tracking. Built as a team project at RIWI.</p>
+          <div class="proj-tags">
+            <span class="t-tag">JavaScript</span><span class="t-tag">HTML/CSS</span><span class="t-tag">Team</span>
+          </div>
+          <div class="proj-footer">
+            <span class="proj-type">WEB · TEAM</span>
+            <a href="https://github.com/Choklitos21/TaskFlow-RIWI" target="_blank" class="proj-link">
+              <i class="fab fa-github"></i> View Code →
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card glass" data-tags="web" data-name="habitflow">
+        <div class="proj-cover cover-web"><div class="proj-cover-emoji">✅</div></div>
+        <div class="proj-body">
+          <h3 class="proj-name">HabitFlow</h3>
+          <p class="proj-desc">Habit tracking CRUD app. Build streaks, track progress, stay consistent. Data persisted with localStorage.</p>
+          <div class="proj-tags">
+            <span class="t-tag">JavaScript</span><span class="t-tag">CRUD</span><span class="t-tag">localStorage</span>
+          </div>
+          <div class="proj-footer">
+            <span class="proj-type">WEB · SOLO</span>
+            <a href="https://github.com/TzerK-LAST/individual-Activity-CRUDZASO-HabitFlow" target="_blank" class="proj-link">
+              <i class="fab fa-github"></i> View Code →
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card glass" data-tags="web team" data-name="ideahub">
+        <div class="proj-cover cover-team"><div class="proj-cover-emoji">💡</div></div>
+        <div class="proj-body">
+          <h3 class="proj-name">IdeaHub</h3>
+          <p class="proj-desc">Collaborative idea sharing platform. Submit, vote, and collaborate on creative ideas. Group CRUDZASO project.</p>
+          <div class="proj-tags">
+            <span class="t-tag">JavaScript</span><span class="t-tag">CRUD</span><span class="t-tag">Team</span>
+          </div>
+          <div class="proj-footer">
+            <span class="proj-type">WEB · TEAM</span>
+            <a href="https://github.com/Mk1-mid/CRUDZASO-IdeaHub" target="_blank" class="proj-link">
+              <i class="fab fa-github"></i> View Code →
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card glass" data-tags="web team" data-name="mini os ubuntu">
+        <div class="proj-cover cover-team"><div class="proj-cover-emoji">🖥️</div></div>
+        <div class="proj-body">
+          <h3 class="proj-name">Mini OS Ubuntu</h3>
+          <p class="proj-desc">Browser-based desktop OS simulation. Draggable windows, taskbar, interactive terminal, apps. Full team project.</p>
+          <div class="proj-tags">
+            <span class="t-tag">HTML</span><span class="t-tag">CSS</span><span class="t-tag">JS</span><span class="t-tag">Team</span>
+          </div>
+          <div class="proj-footer">
+            <span class="proj-type">WEB · TEAM</span>
+            <a href="https://github.com/FaiberCamachoDev/Mini-OS-Ubuntu" target="_blank" class="proj-link">
+              <i class="fab fa-github"></i> View Code →
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card glass" data-tags="python" data-name="galaxia galaxy simulation">
+        <div class="proj-cover cover-python"><div class="proj-cover-emoji">🌌</div></div>
+        <div class="proj-body">
+          <h3 class="proj-name">Galaxia</h3>
+          <p class="proj-desc">Galaxy simulation project. Interactive space objects with physics, animations, and orbital mechanics in Python.</p>
+          <div class="proj-tags">
+            <span class="t-tag">Python</span><span class="t-tag">Simulation</span>
+          </div>
+          <div class="proj-footer">
+            <span class="proj-type">PYTHON · SOLO</span>
+            <a href="https://github.com/TzerK-LAST/galaxia" target="_blank" class="proj-link">
+              <i class="fab fa-github"></i> View Code →
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card glass" data-tags="web" data-name="storecrud store management">
+        <div class="proj-cover cover-web"><div class="proj-cover-emoji">🏪</div></div>
+        <div class="proj-body">
+          <h3 class="proj-name">StoreCRUD</h3>
+          <p class="proj-desc">Store management CRUD application. Inventory control, product management, and sales tracking with a clean UI.</p>
+          <div class="proj-tags">
+            <span class="t-tag">JavaScript</span><span class="t-tag">CRUD</span><span class="t-tag">Web</span>
+          </div>
+          <div class="proj-footer">
+            <span class="proj-type">WEB · SOLO</span>
+            <a href="https://github.com/TzerK-LAST/CRUDactivity---StoreCrud" target="_blank" class="proj-link">
+              <i class="fab fa-github"></i> View Code →
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card glass" data-tags="python" data-name="user history inventory">
+        <div class="proj-cover cover-python"><div class="proj-cover-emoji">📦</div></div>
+        <div class="proj-body">
+          <h3 class="proj-name">User History — Inventory</h3>
+          <p class="proj-desc">User history and inventory management system in Python. CRUD operations with data persistence and reporting.</p>
+          <div class="proj-tags">
+            <span class="t-tag">Python</span><span class="t-tag">Inventory</span><span class="t-tag">CRUD</span>
+          </div>
+          <div class="proj-footer">
+            <span class="proj-type">PYTHON · SOLO</span>
+            <a href="https://github.com/TzerK-LAST/historial-de-usuario-inventario-" target="_blank" class="proj-link">
+              <i class="fab fa-github"></i> View Code →
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="no-results" id="no-results">
+        <i class="fas fa-search"></i>
+        No projects found. Try a different search or filter.
+      </div>
+    </div>
+  </div>
+
+  <footer class="s-footer">
+    <p>Crafted with <span style="color:var(--purple)">♥</span> by TzerK &middot; 2025</p>
+  </footer>
+
+<script>
+  // ── Scroll reveal ──
+  const cards = document.querySelectorAll('.proj-card');
+  const cardObs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        cardObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  cards.forEach(c => cardObs.observe(c));
+
+  // ── Filter + Search ──
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const searchInput = document.getElementById('search-input');
+  const resultCount = document.getElementById('results-count');
+  const noResults   = document.getElementById('no-results');
+  let activeFilter = 'all';
+
+  function applyFilters() {
+    const q = searchInput.value.toLowerCase().trim();
+    let visible = 0;
+    cards.forEach((card, i) => {
+      const tags = card.dataset.tags || '';
+      const name = card.dataset.name || '';
+      const matchFilter = activeFilter === 'all' || tags.includes(activeFilter);
+      const matchSearch = !q || name.includes(q) || tags.includes(q);
+      const show = matchFilter && matchSearch;
+      card.classList.toggle('hidden', !show);
+      if (show) {
+        visible++;
+        // re-trigger animation
+        card.classList.remove('visible');
+        setTimeout(() => card.classList.add('visible'), visible * 70);
+      }
+    });
+    noResults.style.display = visible === 0 ? 'block' : 'none';
+    resultCount.textContent = `${visible} project${visible !== 1 ? 's' : ''}`;
+  }
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeFilter = btn.dataset.filter;
+      applyFilters();
+    });
+  });
+  searchInput.addEventListener('input', applyFilters);
+
+  // Initial count
+  resultCount.textContent = `${cards.length} projects`;
+
+  // ── Count-up stats ──
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      const target = parseInt(el.dataset.target);
+      const suf = el.dataset.suf || '';
+      let n = 0; const step = Math.max(1, Math.ceil(target/40));
+      const t = setInterval(() => { n = Math.min(n+step, target); el.textContent = n+suf; if(n>=target) clearInterval(t); }, 35);
+      obs.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.stats-n[data-target]').forEach(el => obs.observe(el));
+
+  // ── 3D tilt on spotlight ──
+  const spot = document.querySelector('.spotlight-inner');
+  if (spot) {
+    spot.addEventListener('mousemove', e => {
+      const r = spot.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top)  / r.height - 0.5;
+      spot.style.transform = `perspective(1000px) rotateY(${x*6}deg) rotateX(${-y*4}deg)`;
+    });
+    spot.addEventListener('mouseleave', () => { spot.style.transform = ''; });
+  }
+</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-

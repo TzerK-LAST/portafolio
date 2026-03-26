@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TzerK — Frontend Developer Portfolio. Building fast, clean, and functional web experiences.">
+  <title>TzerK — Frontend Developer</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: ['selector', '[data-theme="dark"]'],
+      theme: {
+        extend: {
+          fontFamily: {
+            orbitron: ['Orbitron', 'sans-serif'],
+            inter: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="font-inter overflow-x-hidden">
+
+  <!-- ========================== LOADER ========================== -->
+  <div id="loader">
+    <div class="loader-content">
+      <div class="loader-logo" id="loader-logo">TzerK<span>.</span></div>
+      <div class="loader-tag">INITIALIZING PORTFOLIO...</div>
+      <div class="loader-bar-wrap">
+        <div class="loader-bar-fill" id="loader-bar"></div>
+      </div>
+      <div class="loader-pct" id="loader-pct">0%</div>
+    </div>
+  </div>
+
+  <!-- ========================== CURSOR ========================== -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- ========================== TOASTS ========================== -->
+  <div id="toast-container"></div>
+
+  <!-- ========================== THEME TOGGLE ========================== -->
+  <button id="theme-toggle" class="fixed-btn" style="top:1.5rem;left:1.5rem;" aria-label="Toggle theme">
+    <i class="fas fa-sun"></i>
+  </button>
+
+  <!-- ========================== GAMES FLOAT BTN ========================== -->
+  <button id="games-btn" class="games-float-btn" aria-label="Open games">🎮</button>
+
+  <!-- ========================== NAVBAR ========================== -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo smooth-scroll magnetic-btn">TzerK<span class="text-cyan-400">.</span></a>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#hero"     class="nav-link smooth-scroll">Home</a></li>
+        <li><a href="#about"    class="nav-link smooth-scroll">About</a></li>
+        <li><a href="#skills"   class="nav-link smooth-scroll">Skills</a></li>
+        <li><a href="#projects" class="nav-link smooth-scroll">Projects</a></li>
+        <li><a href="#timeline" class="nav-link smooth-scroll">Timeline</a></li>
+        <li><a href="#contact"  class="nav-link smooth-scroll">Contact</a></li>
+        <li style="border-left:1px solid rgba(255,255,255,0.1);padding-left:1.5rem;margin-left:0.5rem">
+          <a href="/portafolio/menu.html" class="nav-link" style="color:var(--cyan,#00ffff)">V1 ↗</a>
+        </li>
+      </ul>
+
+      <a href="https://github.com/TzerK-LAST" target="_blank" rel="noopener" class="btn-primary nav-github magnetic-btn ripple-btn">
+        <i class="fab fa-github mr-2"></i>GitHub
+      </a>
+
+      <button id="hamburger" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu">
+      <a href="#hero"     class="mobile-link smooth-scroll">Home</a>
+      <a href="#about"    class="mobile-link smooth-scroll">About</a>
+      <a href="#skills"   class="mobile-link smooth-scroll">Skills</a>
+      <a href="#projects" class="mobile-link smooth-scroll">Projects</a>
+      <a href="#timeline" class="mobile-link smooth-scroll">Timeline</a>
+      <a href="#contact"  class="mobile-link smooth-scroll">Contact</a>
+      <a href="https://github.com/TzerK-LAST" target="_blank" class="btn-primary text-center">GitHub</a>
+    </div>
+  </nav>
+
+  <!-- ========================== HERO ========================== -->
+  <section id="hero" class="hero-section">
+    <canvas id="three-canvas"></canvas>
+
+    <div class="hero-content">
+      <p class="hero-greeting" id="hero-greeting">&gt; Hello, World! 👋</p>
+
+      <h1 class="hero-title" id="hero-title">
+        I'm <span class="gradient-text" id="typewriter-text"></span><span class="typewriter-cursor">|</span>
+      </h1>
+
+      <p class="hero-sub" id="hero-sub">Frontend Developer &middot; Builder &middot; Creator</p>
+
+      <div class="hero-tags" id="hero-tags">
+        <span class="tag-badge">HTML/CSS</span>
+        <span class="tag-badge">JavaScript</span>
+        <span class="tag-badge">Python</span>
+        <span class="tag-badge">Node.js</span>
+        <span class="tag-badge">C# / .NET</span>
+      </div>
+
+      <div class="hero-cta" id="hero-cta">
+        <a href="#projects" class="btn-primary magnetic-btn ripple-btn smooth-scroll">
+          <i class="fas fa-rocket mr-2"></i>View My Work
+        </a>
+        <a href="#contact" class="btn-secondary magnetic-btn ripple-btn smooth-scroll">
+          <i class="fas fa-paper-plane mr-2"></i>Hire Me
+        </a>
+        <a href="https://github.com/TzerK-LAST" target="_blank" rel="noopener" class="btn-ghost magnetic-btn ripple-btn">
+          <i class="fab fa-github mr-2"></i>GitHub
+        </a>
+      </div>
+    </div>
+
+    <div class="scroll-indicator">
+      <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+      <span>SCROLL</span>
+    </div>
+  </section>
+
+  <!-- ========================== ABOUT ========================== -->
+  <section id="about" class="section-pad">
+    <div class="bg-glow bg-glow-purple"></div>
+    <div class="container">
+
+      <div class="section-head reveal-up">
+        <p class="section-eyebrow">// WHO AM I</p>
+        <h2 class="section-title">About <span class="gradient-text">Me</span></h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="about-grid">
+        <!-- Image -->
+        <div class="about-img-col reveal-left">
+          <div class="about-img-frame">
+            <div class="about-img-glow"></div>
+            <img src="/img/yorobot.jpeg" alt="TzerK" class="about-img">
+            <div class="about-badge">
+              <i class="fas fa-circle text-green-400 text-xs"></i>
+              <span>Available for work</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text -->
+        <div class="about-text-col reveal-right">
+          <h3 class="about-sub gradient-text">Frontend Developer in Training</h3>
+          <p class="about-p">
+            I'm a passionate frontend developer who builds fast, clean, and functional web interfaces.
+            I learn by building — each project focuses on solving a real problem, not just following tutorials.
+          </p>
+          <p class="about-p">
+            My priority is writing clean, maintainable, and practical code. I'm interested in improving
+            in JavaScript, creating intuitive experiences, and developing tools that are truly useful.
+            Building skills to grow as a developer and work from anywhere in the world.
+          </p>
+
+          <div class="about-links">
+            <a href="mailto:kevinyuluo3@gmail.com" class="btn-secondary magnetic-btn ripple-btn">
+              <i class="fas fa-envelope mr-2"></i>Email Me
+            </a>
+            <a href="https://github.com/TzerK-LAST" target="_blank" class="btn-ghost magnetic-btn ripple-btn">
+              <i class="fab fa-github mr-2"></i>GitHub
+            </a>
+            <a href="https://instagram.com/meikuto_0" target="_blank" class="btn-ghost magnetic-btn ripple-btn">
+              <i class="fab fa-instagram mr-2"></i>Instagram
+            </a>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card glass-card">
+              <div class="stat-num gradient-text"><span class="counter" data-target="2">0</span>+</div>
+              <div class="stat-label">YEARS</div>
+            </div>
+            <div class="stat-card glass-card">
+              <div class="stat-num gradient-text"><span class="counter" data-target="20">0</span>+</div>
+              <div class="stat-label">PROJECTS</div>
+            </div>
+            <div class="stat-card glass-card">
+              <div class="stat-num gradient-text"><span class="counter" data-target="7">0</span>+</div>
+              <div class="stat-label">TECHNOLOGIES</div>
+            </div>
+            <div class="stat-card glass-card">
+              <div class="stat-num gradient-text"><span class="counter" data-target="100">0</span>%</div>
+              <div class="stat-label">DEDICATION</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================== SKILLS ========================== -->
+  <section id="skills" class="section-pad">
+    <div class="bg-glow bg-glow-cyan"></div>
+    <div class="container">
+
+      <div class="section-head reveal-up">
+        <p class="section-eyebrow">// WHAT I KNOW</p>
+        <h2 class="section-title">My <span class="gradient-text">Skills</span></h2>
+        <div class="section-line"></div>
+      </div>
+
+      <!-- Radial circles -->
+      <div class="skills-circles">
+
+        <div class="skill-item reveal-up" data-delay="0">
+          <div class="skill-ring-wrap">
+            <svg viewBox="0 0 100 100" class="skill-svg">
+              <circle cx="50" cy="50" r="42" class="skill-track"/>
+              <circle cx="50" cy="50" r="42" class="skill-fill" data-pct="90" style="stroke:url(#g1)"/>
+              <defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#a855f7"/><stop offset="100%" stop-color="#00ffff"/>
+              </linearGradient></defs>
+            </svg>
+            <div class="skill-icon-wrap">
+              <i class="fab fa-html5" style="color:#f97316"></i>
+              <span class="skill-pct" style="color:#00ffff">90%</span>
+            </div>
+          </div>
+          <p class="skill-label">HTML/CSS</p>
+        </div>
+
+        <div class="skill-item reveal-up" data-delay="80">
+          <div class="skill-ring-wrap">
+            <svg viewBox="0 0 100 100" class="skill-svg">
+              <circle cx="50" cy="50" r="42" class="skill-track"/>
+              <circle cx="50" cy="50" r="42" class="skill-fill" data-pct="82" style="stroke:url(#g2)"/>
+              <defs><linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#ffd700"/><stop offset="100%" stop-color="#f59e0b"/>
+              </linearGradient></defs>
+            </svg>
+            <div class="skill-icon-wrap">
+              <i class="fab fa-js" style="color:#ffd700"></i>
+              <span class="skill-pct" style="color:#ffd700">82%</span>
+            </div>
+          </div>
+          <p class="skill-label">JavaScript</p>
+        </div>
+
+        <div class="skill-item reveal-up" data-delay="160">
+          <div class="skill-ring-wrap">
+            <svg viewBox="0 0 100 100" class="skill-svg">
+              <circle cx="50" cy="50" r="42" class="skill-track"/>
+              <circle cx="50" cy="50" r="42" class="skill-fill" data-pct="75" style="stroke:url(#g3)"/>
+              <defs><linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#06b6d4"/>
+              </linearGradient></defs>
+            </svg>
+            <div class="skill-icon-wrap">
+              <i class="fab fa-python" style="color:#3b82f6"></i>
+              <span class="skill-pct" style="color:#3b82f6">75%</span>
+            </div>
+          </div>
+          <p class="skill-label">Python</p>
+        </div>
+
+        <div class="skill-item reveal-up" data-delay="240">
+          <div class="skill-ring-wrap">
+            <svg viewBox="0 0 100 100" class="skill-svg">
+              <circle cx="50" cy="50" r="42" class="skill-track"/>
+              <circle cx="50" cy="50" r="42" class="skill-fill" data-pct="62" style="stroke:url(#g4)"/>
+              <defs><linearGradient id="g4" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#9b59b6"/><stop offset="100%" stop-color="#512bd4"/>
+              </linearGradient></defs>
+            </svg>
+            <div class="skill-icon-wrap">
+              <i class="fas fa-hashtag" style="color:#9b59b6"></i>
+              <span class="skill-pct" style="color:#9b59b6">62%</span>
+            </div>
+          </div>
+          <p class="skill-label">C#</p>
+        </div>
+
+        <div class="skill-item reveal-up" data-delay="320">
+          <div class="skill-ring-wrap">
+            <svg viewBox="0 0 100 100" class="skill-svg">
+              <circle cx="50" cy="50" r="42" class="skill-track"/>
+              <circle cx="50" cy="50" r="42" class="skill-fill" data-pct="65" style="stroke:url(#g5)"/>
+              <defs><linearGradient id="g5" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#68a063"/><stop offset="100%" stop-color="#3c873a"/>
+              </linearGradient></defs>
+            </svg>
+            <div class="skill-icon-wrap">
+              <i class="fab fa-node-js" style="color:#68a063"></i>
+              <span class="skill-pct" style="color:#68a063">65%</span>
+            </div>
+          </div>
+          <p class="skill-label">Node.js</p>
+        </div>
+
+        <div class="skill-item reveal-up" data-delay="400">
+          <div class="skill-ring-wrap">
+            <svg viewBox="0 0 100 100" class="skill-svg">
+              <circle cx="50" cy="50" r="42" class="skill-track"/>
+              <circle cx="50" cy="50" r="42" class="skill-fill" data-pct="80" style="stroke:url(#g6)"/>
+              <defs><linearGradient id="g6" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#f97316"/><stop offset="100%" stop-color="#ef4444"/>
+              </linearGradient></defs>
+            </svg>
+            <div class="skill-icon-wrap">
+              <i class="fab fa-git-alt" style="color:#f97316"></i>
+              <span class="skill-pct" style="color:#f97316">80%</span>
+            </div>
+          </div>
+          <p class="skill-label">Git</p>
+        </div>
+
+      </div>
+
+      <!-- Bar skills -->
+      <div class="skills-bars">
+        <div class="skill-bar reveal-left">
+          <div class="skill-bar-head"><span>HTML / CSS</span><span style="color:#00ffff">90%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" data-width="90" style="background:linear-gradient(90deg,#a855f7,#00ffff)"></div></div>
+        </div>
+        <div class="skill-bar reveal-right">
+          <div class="skill-bar-head"><span>JavaScript ES6+</span><span style="color:#ffd700">82%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" data-width="82" style="background:linear-gradient(90deg,#ffd700,#f59e0b)"></div></div>
+        </div>
+        <div class="skill-bar reveal-left">
+          <div class="skill-bar-head"><span>Python</span><span style="color:#3b82f6">75%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" data-width="75" style="background:linear-gradient(90deg,#3b82f6,#06b6d4)"></div></div>
+        </div>
+        <div class="skill-bar reveal-right">
+          <div class="skill-bar-head"><span>Node.js / Express</span><span style="color:#68a063">65%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" data-width="65" style="background:linear-gradient(90deg,#68a063,#3c873a)"></div></div>
+        </div>
+        <div class="skill-bar reveal-left">
+          <div class="skill-bar-head"><span>C# / .NET</span><span style="color:#9b59b6">62%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" data-width="62" style="background:linear-gradient(90deg,#9b59b6,#512bd4)"></div></div>
+        </div>
+        <div class="skill-bar reveal-right">
+          <div class="skill-bar-head"><span>Git / GitHub</span><span style="color:#f97316">80%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" data-width="80" style="background:linear-gradient(90deg,#f97316,#ef4444)"></div></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================== PROJECTS ========================== -->
+  <section id="projects" class="section-pad">
+    <div class="bg-glow bg-glow-gold"></div>
+    <div class="container">
+
+      <div class="section-head reveal-up">
+        <p class="section-eyebrow">// WHAT I'VE BUILT</p>
+        <h2 class="section-title">My <span class="gradient-text">Projects</span></h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="projects-grid">
+
+        <!-- Netflix Replica -->
+        <div class="proj-wrap reveal-up" data-delay="0">
+          <div class="proj-card">
+            <div class="proj-inner">
+              <div class="proj-front glass-card">
+                <div class="proj-emoji">🎬</div>
+                <h3 class="proj-name gradient-text">Netflix Replica</h3>
+                <p class="proj-desc">Full Netflix UI clone with Landing, Auth system, Profile selection, and Home page.</p>
+                <div class="proj-tags">
+                  <span class="tech-tag">HTML</span><span class="tech-tag">CSS</span><span class="tech-tag">JavaScript</span>
+                </div>
+                <div class="proj-hint">Hover to see more →</div>
+              </div>
+              <div class="proj-back glass-card">
+                <h3 class="proj-name gradient-text">Netflix Replica</h3>
+                <p class="proj-detail">Complete Netflix landing page, login/signup flow, profile switcher, and home screen with categorized content rows. Fully responsive.</p>
+                <a href="https://github.com/TzerK-LAST/neflix-replicated" target="_blank" rel="noopener" class="btn-primary w-full text-center ripple-btn magnetic-btn mt-4 block">
+                  <i class="fab fa-github mr-2"></i>View on GitHub
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- EcoRide -->
+        <div class="proj-wrap reveal-up" data-delay="100">
+          <div class="proj-card">
+            <div class="proj-inner">
+              <div class="proj-front glass-card">
+                <div class="proj-emoji">🚴</div>
+                <h3 class="proj-name gradient-text">EcoRide</h3>
+                <p class="proj-desc">Interactive bike rental simulator. Manage fleet, calculate pricing, and track rides.</p>
+                <div class="proj-tags">
+                  <span class="tech-tag">Python</span><span class="tech-tag">OOP</span><span class="tech-tag">CLI</span>
+                </div>
+                <div class="proj-hint">Hover to see more →</div>
+              </div>
+              <div class="proj-back glass-card">
+                <h3 class="proj-name gradient-text">EcoRide</h3>
+                <p class="proj-detail">Python simulation of an eco-friendly bike rental service with CRUD operations, pricing logic, and an interactive CLI menu.</p>
+                <a href="https://github.com/TzerK-LAST/EcoRide-simulador-de-alquiler" target="_blank" rel="noopener" class="btn-primary w-full text-center ripple-btn magnetic-btn mt-4 block">
+                  <i class="fab fa-github mr-2"></i>View on GitHub
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TaskFlow -->
+        <div class="proj-wrap reveal-up" data-delay="200">
+          <div class="proj-card">
+            <div class="proj-inner">
+              <div class="proj-front glass-card">
+                <div class="proj-emoji">📋</div>
+                <h3 class="proj-name gradient-text">TaskFlow</h3>
+                <p class="proj-desc">Collaborative task manager with real-time updates, team management, and progress tracking.</p>
+                <div class="proj-tags">
+                  <span class="tech-tag">JavaScript</span><span class="tech-tag">HTML/CSS</span><span class="tech-tag">Team</span>
+                </div>
+                <div class="proj-hint">Hover to see more →</div>
+              </div>
+              <div class="proj-back glass-card">
+                <h3 class="proj-name gradient-text">TaskFlow</h3>
+                <p class="proj-detail">A collaborative task management system with drag-and-drop, user roles, and a clean modern UI. Team project with Git workflow.</p>
+                <a href="https://github.com/Choklitos21/TaskFlow-RIWI" target="_blank" rel="noopener" class="btn-primary w-full text-center ripple-btn magnetic-btn mt-4 block">
+                  <i class="fab fa-github mr-2"></i>View on GitHub
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- HabitFlow -->
+        <div class="proj-wrap reveal-up" data-delay="0">
+          <div class="proj-card">
+            <div class="proj-inner">
+              <div class="proj-front glass-card">
+                <div class="proj-emoji">✅</div>
+                <h3 class="proj-name gradient-text">HabitFlow</h3>
+                <p class="proj-desc">Habit tracking CRUD app. Build streaks, track progress, and stay consistent every day.</p>
+                <div class="proj-tags">
+                  <span class="tech-tag">JavaScript</span><span class="tech-tag">CRUD</span><span class="tech-tag">localStorage</span>
+                </div>
+                <div class="proj-hint">Hover to see more →</div>
+              </div>
+              <div class="proj-back glass-card">
+                <h3 class="proj-name gradient-text">HabitFlow</h3>
+                <p class="proj-detail">Individual CRUD activity: full habit tracking with create/read/update/delete, streak tracking, and persistent localStorage data.</p>
+                <a href="https://github.com/TzerK-LAST/individual-Activity-CRUDZASO-HabitFlow" target="_blank" rel="noopener" class="btn-primary w-full text-center ripple-btn magnetic-btn mt-4 block">
+                  <i class="fab fa-github mr-2"></i>View on GitHub
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- IdeaHub -->
+        <div class="proj-wrap reveal-up" data-delay="100">
+          <div class="proj-card">
+            <div class="proj-inner">
+              <div class="proj-front glass-card">
+                <div class="proj-emoji">💡</div>
+                <h3 class="proj-name gradient-text">IdeaHub</h3>
+                <p class="proj-desc">Team-built idea sharing platform. Submit, vote, and collaborate on creative ideas.</p>
+                <div class="proj-tags">
+                  <span class="tech-tag">JavaScript</span><span class="tech-tag">Team</span><span class="tech-tag">CRUD</span>
+                </div>
+                <div class="proj-hint">Hover to see more →</div>
+              </div>
+              <div class="proj-back glass-card">
+                <h3 class="proj-name gradient-text">IdeaHub</h3>
+                <p class="proj-detail">Group CRUDZASO: collaborative platform for sharing and voting on ideas, built as a team with clean architecture and code reviews.</p>
+                <a href="https://github.com/Mk1-mid/CRUDZASO-IdeaHub" target="_blank" rel="noopener" class="btn-primary w-full text-center ripple-btn magnetic-btn mt-4 block">
+                  <i class="fab fa-github mr-2"></i>View on GitHub
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mini OS -->
+        <div class="proj-wrap reveal-up" data-delay="200">
+          <div class="proj-card">
+            <div class="proj-inner">
+              <div class="proj-front glass-card">
+                <div class="proj-emoji">🖥️</div>
+                <h3 class="proj-name gradient-text">Mini OS Ubuntu</h3>
+                <p class="proj-desc">A browser-based desktop OS simulation with windows, taskbar, apps, and a terminal.</p>
+                <div class="proj-tags">
+                  <span class="tech-tag">HTML</span><span class="tech-tag">CSS</span><span class="tech-tag">JS</span><span class="tech-tag">Team</span>
+                </div>
+                <div class="proj-hint">Hover to see more →</div>
+              </div>
+              <div class="proj-back glass-card">
+                <h3 class="proj-name gradient-text">Mini OS Ubuntu</h3>
+                <p class="proj-detail">Complete browser desktop: draggable windows, a working taskbar, multiple mini-apps, and an interactive terminal. Full team project.</p>
+                <a href="https://github.com/FaiberCamachoDev/Mini-OS-Ubuntu" target="_blank" rel="noopener" class="btn-primary w-full text-center ripple-btn magnetic-btn mt-4 block">
+                  <i class="fab fa-github mr-2"></i>View on GitHub
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================== JOURNEY ========================== -->
+  <section id="timeline" class="section-pad">
+    <div class="bg-glow bg-glow-purple"></div>
+    <div class="container">
+
+      <div class="section-head reveal-up">
+        <p class="section-eyebrow">// MY STORY</p>
+        <h2 class="section-title">My <span class="gradient-text">Journey</span></h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="journey-grid">
+
+        <div class="journey-card glass-card reveal-up" data-delay="0">
+          <div class="journey-num">01</div>
+          <div class="journey-icon">🚀</div>
+          <div class="journey-date">2023 — Q1</div>
+          <h3 class="journey-title">The Journey Begins</h3>
+          <p class="journey-text">Discovered programming and fell in love with Python. Started with logic, algorithms, and control flow exercises.</p>
+          <div class="journey-tags"><span class="tech-tag">Python</span><span class="tech-tag">Algorithms</span></div>
+        </div>
+
+        <div class="journey-card glass-card reveal-up" data-delay="100">
+          <div class="journey-num">02</div>
+          <div class="journey-icon">⚙️</div>
+          <div class="journey-date">2023 — Q3</div>
+          <h3 class="journey-title">Python Projects</h3>
+          <p class="journey-text">Built EcoRide (bike rental simulator) and 10+ Python exercises focused on data structures, OOP, and file systems.</p>
+          <div class="journey-tags"><span class="tech-tag">OOP</span><span class="tech-tag">CRUD</span><span class="tech-tag">Data Structures</span></div>
+        </div>
+
+        <div class="journey-card glass-card reveal-up" data-delay="200">
+          <div class="journey-num">03</div>
+          <div class="journey-icon">🌐</div>
+          <div class="journey-date">2024 — Q1</div>
+          <h3 class="journey-title">Web Development</h3>
+          <p class="journey-text">Transitioned to web. Mastered HTML and CSS fundamentals, built responsive layouts and interactive UIs from scratch.</p>
+          <div class="journey-tags"><span class="tech-tag">HTML5</span><span class="tech-tag">CSS3</span><span class="tech-tag">Flexbox/Grid</span></div>
+        </div>
+
+        <div class="journey-card glass-card reveal-up" data-delay="0">
+          <div class="journey-num">04</div>
+          <div class="journey-icon">⚡</div>
+          <div class="journey-date">2024 — Q2</div>
+          <h3 class="journey-title">JavaScript Deep Dive</h3>
+          <p class="journey-text">DOM manipulation, async/await, fetch API, localStorage. Built HabitFlow and multiple CRUD apps with vanilla JS.</p>
+          <div class="journey-tags"><span class="tech-tag">JS ES6+</span><span class="tech-tag">DOM API</span><span class="tech-tag">Async/Await</span></div>
+        </div>
+
+        <div class="journey-card glass-card reveal-up" data-delay="100">
+          <div class="journey-num">05</div>
+          <div class="journey-icon">🤝</div>
+          <div class="journey-date">2024 — Q4</div>
+          <h3 class="journey-title">Team Collaboration</h3>
+          <p class="journey-text">Built TaskFlow, IdeaHub and Mini OS Ubuntu with teams. Learned Git workflows, code reviews, and agile development.</p>
+          <div class="journey-tags"><span class="tech-tag">Git</span><span class="tech-tag">Teamwork</span><span class="tech-tag">Agile</span></div>
+        </div>
+
+        <div class="journey-card glass-card reveal-up" data-delay="200">
+          <div class="journey-num">06</div>
+          <div class="journey-icon">🛰️</div>
+          <div class="journey-date">2025 — NOW</div>
+          <h3 class="journey-title">Full-Stack Journey</h3>
+          <p class="journey-text">Learning Node.js, Express, C# with .NET, and databases. Building full-stack apps. This portfolio reflects how far I've come.</p>
+          <div class="journey-tags"><span class="tech-tag">Node.js</span><span class="tech-tag">C# / .NET</span><span class="tech-tag">Express</span></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================== CONTACT ========================== -->
+  <section id="contact" class="section-pad">
+    <div class="bg-glow bg-glow-cyan"></div>
+    <div class="container">
+
+      <div class="section-head reveal-up">
+        <p class="section-eyebrow">// LET'S TALK</p>
+        <h2 class="section-title">Get In <span class="gradient-text">Touch</span></h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="contact-grid">
+        <!-- Info -->
+        <div class="contact-info reveal-left">
+          <h3 class="contact-sub gradient-text">Let's Build Something Amazing</h3>
+          <p class="contact-p">
+            Whether you want to collaborate on a project, need a frontend developer for your team,
+            or just want to say hello — my inbox is always open!
+          </p>
+
+          <div class="contact-methods">
+            <a href="mailto:kevinyuluo3@gmail.com" class="contact-method glass-card magnetic-btn">
+              <div class="contact-icon-box" style="background:rgba(168,85,247,0.15)">
+                <i class="fas fa-envelope" style="color:#a855f7"></i>
+              </div>
+              <div>
+                <div class="contact-method-label">EMAIL</div>
+                <div class="contact-method-val">kevinyuluo3@gmail.com</div>
+              </div>
+            </a>
+            <a href="https://github.com/TzerK-LAST" target="_blank" rel="noopener" class="contact-method glass-card magnetic-btn">
+              <div class="contact-icon-box" style="background:rgba(0,255,255,0.1)">
+                <i class="fab fa-github" style="color:#00ffff"></i>
+              </div>
+              <div>
+                <div class="contact-method-label">GITHUB</div>
+                <div class="contact-method-val">TzerK-LAST</div>
+              </div>
+            </a>
+            <a href="https://instagram.com/meikuto_0" target="_blank" rel="noopener" class="contact-method glass-card magnetic-btn">
+              <div class="contact-icon-box" style="background:rgba(255,215,0,0.1)">
+                <i class="fab fa-instagram" style="color:#ffd700"></i>
+              </div>
+              <div>
+                <div class="contact-method-label">INSTAGRAM</div>
+                <div class="contact-method-val">@meikuto_0</div>
+              </div>
+            </a>
+          </div>
+
+          <div class="qr-wrap glass-card">
+            <img src="/img/meikuto_0_qr.png" alt="Instagram QR @meikuto_0" class="qr-img">
+            <div>
+              <div class="contact-method-label">SCAN TO FOLLOW</div>
+              <div class="contact-method-val">@meikuto_0</div>
+              <div style="color:#888;font-size:0.75rem">Instagram</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <div class="reveal-right">
+          <form id="contact-form" class="glass-card contact-form-card">
+            <h3 class="contact-form-title gradient-text">Send a Message</h3>
+
+            <div class="form-group">
+              <label class="form-label">YOUR NAME</label>
+              <input type="text" id="form-name" name="name" class="form-input" placeholder="John Doe" required autocomplete="off">
+              <div class="form-error" id="name-error">Please enter your name</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">EMAIL ADDRESS</label>
+              <input type="email" id="form-email" name="email" class="form-input" placeholder="john@example.com" required autocomplete="off">
+              <div class="form-error" id="email-error">Please enter a valid email</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">MESSAGE</label>
+              <textarea id="form-message" name="message" class="form-input" rows="5" placeholder="Let's build something amazing together..." required></textarea>
+              <div class="form-error" id="message-error">Please enter your message</div>
+            </div>
+
+            <button type="submit" id="form-submit" class="btn-primary w-full ripple-btn magnetic-btn">
+              <span id="submit-text"><i class="fas fa-paper-plane mr-2"></i>Send Message</span>
+              <span id="submit-loading" class="hidden"><i class="fas fa-spinner fa-spin mr-2"></i>Sending...</span>
+            </button>
+
+            <div id="form-success" class="form-success hidden">
+              <div class="text-green-400 font-bold text-lg">✅ Message Sent!</div>
+              <p style="color:#888;font-size:0.875rem;margin-top:0.25rem">I'll get back to you soon!</p>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================== FOOTER ========================== -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-logo">TzerK<span>.</span></div>
+      <p class="footer-copy">Built with ❤️ by TzerK &middot; 2025 &middot; All rights reserved</p>
+      <div class="footer-socials">
+        <a href="https://github.com/TzerK-LAST" target="_blank" class="social-btn magnetic-btn"><i class="fab fa-github"></i></a>
+        <a href="https://instagram.com/meikuto_0" target="_blank" class="social-btn magnetic-btn"><i class="fab fa-instagram"></i></a>
+        <a href="mailto:kevinyuluo3@gmail.com" class="social-btn magnetic-btn"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================== GAMES PANEL ========================== -->
+  <div id="games-panel" class="games-panel hidden">
+    <div class="games-overlay" id="games-overlay"></div>
+    <div class="games-drawer">
+      <div class="games-header">
+        <h2 class="gradient-text" style="font-family:'Orbitron',sans-serif;font-weight:900;font-size:1.25rem">🎮 Game Zone</h2>
+        <button id="games-close" class="games-close-btn"><i class="fas fa-times"></i></button>
+      </div>
+
+      <div class="games-tabs">
+        <button class="game-tab active" data-game="snake">🐍 Snake</button>
+        <button class="game-tab" data-game="memory">🧠 Memory</button>
+        <button class="game-tab" data-game="typing">⌨️ Typing</button>
+      </div>
+
+      <div class="games-body">
+
+        <!-- SNAKE -->
+        <div id="game-snake" class="game-screen active">
+          <div class="game-hud">
+            <div class="hud-group">
+              <div class="hud-item">
+                <div class="hud-label">SCORE</div>
+                <div id="snake-score" class="hud-val gradient-text">0</div>
+              </div>
+              <div class="hud-item">
+                <div class="hud-label">HIGH SCORE</div>
+                <div id="snake-high" class="hud-val" style="color:#ffd700">0</div>
+              </div>
+              <div class="hud-item">
+                <div class="hud-label">LEVEL</div>
+                <div id="snake-level" class="hud-val" style="color:#a855f7">1</div>
+              </div>
+            </div>
+            <button id="snake-start" class="btn-primary ripple-btn">Start</button>
+          </div>
+          <canvas id="snake-canvas" class="snake-canvas"></canvas>
+          <div class="dpad">
+            <div></div><button class="dpad-btn" id="btn-up">↑</button><div></div>
+            <button class="dpad-btn" id="btn-left">←</button>
+            <button class="dpad-btn" id="btn-down">↓</button>
+            <button class="dpad-btn" id="btn-right">→</button>
+          </div>
+          <p class="game-hint">Arrow keys / WASD to move</p>
+        </div>
+
+        <!-- MEMORY -->
+        <div id="game-memory" class="game-screen">
+          <div class="game-hud">
+            <div class="hud-group">
+              <div class="hud-item">
+                <div class="hud-label">MOVES</div>
+                <div id="memory-moves" class="hud-val gradient-text">0</div>
+              </div>
+              <div class="hud-item">
+                <div class="hud-label">PAIRS</div>
+                <div id="memory-pairs" class="hud-val" style="color:#00ffff">0/8</div>
+              </div>
+              <div class="hud-item">
+                <div class="hud-label">TIME</div>
+                <div id="memory-time" class="hud-val" style="color:#ffd700">0s</div>
+              </div>
+            </div>
+            <button id="memory-restart" class="btn-primary ripple-btn">Restart</button>
+          </div>
+          <div id="memory-grid" class="memory-grid"></div>
+          <div id="memory-win" class="win-banner hidden">
+            <div class="win-emoji">🎉</div>
+            <h3 class="gradient-text win-title">You Won!</h3>
+            <p id="memory-result" class="win-sub"></p>
+          </div>
+        </div>
+
+        <!-- TYPING -->
+        <div id="game-typing" class="game-screen">
+          <div class="game-hud">
+            <div class="hud-group">
+              <div class="hud-item">
+                <div class="hud-label">WPM</div>
+                <div id="typing-wpm" class="hud-val gradient-text">0</div>
+              </div>
+              <div class="hud-item">
+                <div class="hud-label">ACCURACY</div>
+                <div id="typing-accuracy" class="hud-val" style="color:#00ffff">100%</div>
+              </div>
+              <div class="hud-item">
+                <div class="hud-label">TIME LEFT</div>
+                <div id="typing-timer" class="hud-val" style="color:#ffd700">60s</div>
+              </div>
+            </div>
+            <button id="typing-restart" class="btn-primary ripple-btn">Restart</button>
+          </div>
+          <div id="typing-text" class="typing-text-box"></div>
+          <textarea id="typing-input" class="form-input typing-textarea" rows="3" placeholder="Start typing here..."></textarea>
+          <p class="game-hint">Type the highlighted text above as fast and accurately as you can!</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================== SCRIPTS ========================== -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  <script src="/js/games.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>
